@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class band extends Model {
+  class meet_greet extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,29 +11,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // band id, start time, end time
+      //band_id, event_id, start_time, end_time, date
+      // meet_greet.belongsTo(models.band, {
+      //   foreignKey: 'band_id',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
-  band.init({
-    band_id: {
+  meet_greet.init({
+    meet_greet_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
-    band_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    band_members: {
+    event_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    band_genre: {
-      type: DataTypes.TEXT,
+    band_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    available_start_time: {
+    start_time: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -41,11 +41,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   }, {
     sequelize,
-    modelName: 'band',
-    tableName: 'bands',
+    modelName: 'meet_greet',
+    tableName: 'meet_greets',
     timestamps: false,
   });
-  return band;
+  return meet_greet;
 };
