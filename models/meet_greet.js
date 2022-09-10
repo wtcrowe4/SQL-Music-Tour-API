@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    meet_greet_location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     start_time: {
       type: DataTypes.DATE,
       allowNull: false,

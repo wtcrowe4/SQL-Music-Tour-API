@@ -16,6 +16,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      meet_greet_location: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       start_time: {
         type: Sequelize.DATE,
         allowNull: false
