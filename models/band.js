@@ -1,10 +1,13 @@
 // DEPENDANCIES
 const { Sequelize, DataTypes, Model } = require('sequelize')
+// SEQUELIZE CONNECTION
+const database = process.env.PG_URI
+const password = process.env.PG_PASSWORD
 const sequelize = new Sequelize({
-    storage: process.env.PG_URI,
+    storage: database,
     dialect: 'postgres',
     username: 'postgres',
-    password: process.env.PG_PASSWORD,
+    password: `${password}`,
 })
 
 // MODEL
@@ -37,8 +40,6 @@ Band.init({
     tableName: 'bands',
     timestamps: false
 })
-
-
 
 
 
