@@ -1,47 +1,50 @@
-// DEPENDANCIES
-const { Sequelize, DataTypes, Model } = require('sequelize')
-// SEQUELIZE CONNECTION
-const database = process.env.PG_URI
-const password = process.env.PG_PASSWORD
-const sequelize = new Sequelize({
-    storage: database,
-    dialect: 'postgres',
-    username: 'postgres',
-    password: `${password}`,
-})
-
-// MODEL
-class Band extends Model {}
-
-Band.init({
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class band extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  band.init({
     band_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
     band_name: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    band_members: DataTypes.INTEGER,
-    band_genre: DataTypes.TEXT,
+    band_members: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    band_genre: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
     available_start_time: {
-        type: DataTypes.DATE,
-        allowNull: false
+      type: DataTypes.DATE,
+      allowNull: false,
     },
     end_time: {
-        type: DataTypes.DATE,
-        allowNull: false
+      type: DataTypes.DATE,
+      allowNull: false,
     },
-}, {
+  }, {
     sequelize,
-    modelName: 'Band',
+    modelName: 'band',
     tableName: 'bands',
-    timestamps: false
-})
-
-
-
-//EXPORT
-module.exports = Band
+    timestamps: false,
+  });
+  return band;
+};
