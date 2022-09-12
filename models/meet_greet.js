@@ -12,10 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       //band_id, event_id, start_time, end_time, date
-      // meet_greet.belongsTo(models.band, {
-      //   foreignKey: 'band_id',
-      //   onDelete: 'CASCADE',
-      // });
+      meet_greet.belongsTo(models.band, {foreignKey: 'band_id'});
+      meet_greet.belongsTo(models.event, {foreignKey: 'event_id'});
+      meet_greet.belongsTo(models.event, {foreignKey: 'start_time', targetKey: 'available_start_time'});
+      meet_greet.belongsTo(models.event, {foreignKey: 'end_time'});
+      meet_greet.belongsTo(models.event, {foreignKey: 'date', targetKey: 'event_date'});
     }
   }
   meet_greet.init({

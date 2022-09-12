@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       //stage_id, event_id
+      stage_event.belongsTo(models.stage, {foreignKey: 'stage_id'});
+      stage_event.belongsTo(models.event, {foreignKey: 'event_id'});
+      
     }
   }
   stage_event.init({

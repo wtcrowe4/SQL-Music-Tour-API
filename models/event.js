@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // event id, band id, start time, end time
+      event.hasMany(models.band), {foreignKey: 'band_id'};
+      event.hasMany(models.band), {foreignKey: 'start_time', targetKey: 'available_start_time'};
+      event.hasMany(models.band, {foreignKey: 'end_time'});
     }
   }
   event.init({
@@ -19,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
+    },
+    band_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     event_name: {
       type: DataTypes.STRING,
