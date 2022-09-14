@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // band id, start time, end time
-      band.belongsToMany(models.event, {foreignKey: 'band_id'});
+      //band.belongsToMany(models.event, {foreignKey: 'band_id'});
       
     }
   }
