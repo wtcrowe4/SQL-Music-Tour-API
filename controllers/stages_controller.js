@@ -1,8 +1,14 @@
 // DEPENDANCIES
+const { Events } = require('pg');
 const { Op } = require('sequelize');
 const stages = require('express').Router();
 const db = require('../models');
 const Stage = db.stage;
+const SetTime = db.set_time;
+const Event = db.event;
+const Band = db.band;
+const MeetGreet = db.meet_greet;
+const StageEvent = db.stage_event;
 
 // GET ROUTES
 stages.get('/', async (req, res) => {
@@ -19,11 +25,22 @@ stages.get('/', async (req, res) => {
     }
 });
 
-stages.get('/:id', async (req, res) => {
+stages.get('/:name', async (req, res) => {
     try {
         const stage = await Stage.findOne({
-            where: { stage_id: req.params.id }
-        });
+            where: { stage_name: req.params.name },
+            include: 
+                {
+                    model: Event,
+                    as: 'events',
+                    attributes: ['event_name', 'event_date', 'event_location', 'start_time', 'end_time' ],
+                    through: {
+                        attributes: []
+                    },
+                    order: [ [ 'event_date', 'ASC' ] ],
+                    //include: {model: StageEvent, as: 'stages_events', attributes: ['stage_event_id']}
+                }
+    });
         res.status(200).json(stage);
     } catch (err) {
         res.status(500).json({ error: err });

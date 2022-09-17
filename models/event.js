@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'event_id',
         as: 'meet_greets'
       });
+      event.hasMany(stage_event, {
+        foreignKey: 'event_id',
+        as: 'stages_events'
+      });
     }
   }
   event.init({

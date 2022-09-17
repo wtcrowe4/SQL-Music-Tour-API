@@ -3,7 +3,9 @@ const { Op } = require('sequelize');
 const bands = require('express').Router();
 const db = require('../models');
 const Band = db.band;
-
+const MeetGreet = db.meet_greet;
+const Event = db.event;
+const SetTime = db.set_time;
 
 // GET ROUTES
 bands.get('/', async (req, res) => {
@@ -21,10 +23,36 @@ bands.get('/', async (req, res) => {
     }
 });
 
-bands.get('/:id', async (req, res) => {
+bands.get('/:name', async (req, res) => {
     try {
         const band = await Band.findOne({
-            where: { band_id: req.params.id }
+            where: { band_name: req.params.name },
+            include: [
+                {
+                    model: MeetGreet, 
+                    as: 'meet_greets',
+                    attributes: ['date', 'meet_greet_location', 'start_time', 'end_time'],
+                    order: [ [ 'start_time', 'ASC' ] ],
+                    include: {
+                        model: Event,
+                        as: 'events',
+                        attributes: ['event_name'],
+                        where: { event_name: { [Op.like]: `%${req.query.event ? req.query.event : ''}%` } }
+                      }
+                },
+                {
+                    model: SetTime,
+                    as: 'set_times',
+                    attributes: ['date', 'start_time', 'end_time'],
+                    order: [ [ 'start_time', 'ASC' ] ],
+                    include: {
+                        model: Event,
+                        as: 'events',
+                        attributes: ['event_name', 'event_location'],
+                        where: { event_name: { [Op.like]: `%${req.query.event ? req.query.event : ''}%` } }
+                      }
+                }
+            ]
         });
         res.status(200).json(band);
     } catch (err) {
